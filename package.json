@@ -13,7 +13,7 @@
         "alpinejs": "^3.14.1",
         "autoprefixer": "^10.4.19",
         "axios": "^1.6.4",
-        "ckeditor5": "^42.0.2",
+        "ckeditor5": "^43.1.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.39",
         "showdown": "^2.1.0",
