@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+/* resources/css/app.css */
+
+@import "@dasundev/livewire-dropzone-styles";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply w-screen h-screen text-slate-800 dark:text-slate-50 overflow-x-hidden
+  }
+
+  select {
+    @apply outline-none rounded dark:bg-slate-800
+  }
+
+  .logo {
+    font-family: "Titillium Web", sans-serif;
+  }
+
+  .ck {
+    @apply dark:bg-slate-800 dark:text-slate-950
+  }
+
+  .switch-on {
+    @apply translate-x-full
+  }
+
+  .switch-off {
+    @apply translate-x-0
+  }
+}

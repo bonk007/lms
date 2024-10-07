@@ -1,0 +1,21 @@
+{
+  "id": "roles",
+  "name": "Roles Management",
+  "allowSpecificRecords": true,
+  "denySpecificRecords": true,
+  "permissions": {
+    "view": {},
+    "viewDetail": {
+      "includes": ["view"]
+    },
+    "create": {
+      "includes": ["view", "viewDetail"]
+    },
+    "update": {
+      "includes": ["view", "viewDetail"]
+    },
+    "delete": {
+      "includes": ["view", "viewDetail"]
+    }
+  }
+}

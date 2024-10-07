@@ -1,0 +1,37 @@
+{
+  "id": "users",
+  "name": "Users Management",
+  "allowSpecificRecords": true,
+  "denySpecificRecords": true,
+  "permissions": {
+    "view": {},
+    "viewDetail": {
+      "include": ["view"]
+    },
+    "viewTrashed": {
+      "include": ["view", "viewDetail"]
+    },
+    "create": {
+      "include": ["view", "viewDetail", "update", "delete"]
+    },
+    "update": {
+      "include": ["view", "viewDetail"]
+    },
+    "delete": {
+      "include": ["view", "viewDetail"]
+    },
+    "restore": {
+      "include": ["view", "viewTrashed", "delete", "viewDetail"]
+    },
+    "flush": {
+      "include": ["view", "viewTrashed", "delete", "restore", "viewDetail"]
+    },
+    "assignToRole": {
+      "include": ["view", "update", "viewDetail"],
+      "dependsOnResources": [{
+        "resource": "roles",
+        "permissions": ["view", "viewDetail"]
+      }]
+    }
+  }
+}
