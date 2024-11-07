@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Enrollment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class EnrollmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status' => Enrollment::STATUS_APPROVED,
+            'type' => Enrollment::STATUS_APPROVED
         ];
     }
 }

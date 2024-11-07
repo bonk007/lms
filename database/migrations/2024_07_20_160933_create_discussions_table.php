@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('discussions', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id')->nullable()->index();
-            $table->unsignedBigInteger('initial_post_id')->index();
+            $table->unsignedBigInteger('initial_post_id')->nullable()->index();
             $table->unsignedBigInteger('created_by')->index();
             $table->timestamps();
             $table->timestamp('closed_at')->nullable();

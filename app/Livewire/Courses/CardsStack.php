@@ -138,7 +138,7 @@ class CardsStack extends Component
 
 //        $counts = $collection->count();
         return view('livewire.courses.cards-stack', [
-            'collection' => $this->take > 0 ? $query->paginate($this->take) : $query,
+            'collection' => $this->take > 0 ? $query->paginate($this->take) : $query->get(),
             'counts' => 0
         ]);
     }

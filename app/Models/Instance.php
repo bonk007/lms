@@ -37,6 +37,7 @@ class Instance extends Model
     public function contributors(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'instance_contributors', 'instance_id', 'user_id')
-            ->withPivotValue('status');
+            ->withPivot(['status']);
+//            ->withPivotValue('status');
     }
 }

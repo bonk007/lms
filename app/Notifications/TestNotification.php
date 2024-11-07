@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
 class TestNotification extends Notification
@@ -24,7 +25,7 @@ class TestNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -41,6 +42,11 @@ class TestNotification extends Notification
         ];
     }
 
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage($this->toArray($notifiable));
+    }
+
     /**
      * Get the notification's database type.
      *
@@ -48,6 +54,11 @@ class TestNotification extends Notification
      * @return string
      */
     public function databaseType(object $notifiable): string
+    {
+        return 'test';
+    }
+
+    public function broadcastType(): string
     {
         return 'test';
     }

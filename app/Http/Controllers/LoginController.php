@@ -28,6 +28,10 @@ class LoginController extends Controller
 
         auth()->login($user, true);
 
+        $user->activity()->touch($request->url(), [
+            'action' => 'logged in',
+        ]);
+
         return redirect()->route('home');
 
     }

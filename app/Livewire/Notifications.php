@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Elements\NotificationsButton;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,13 +21,22 @@ class Notifications extends Component
 
     public array $notifications;
 
+    protected $listeners = [
+        'reload'
+    ];
+
     public function boot(): void
+    {
+        $this->reload();
+    }
+
+    public function reload(): void
     {
         $this->notifications = $this->notifications()->get()
             ->map(fn(DatabaseNotification $notification) => [
                 ...$notification->toArray(),
                 ...[
-                   'created_at' => $notification->getAttribute('created_at')->diffForHumans(now()),
+                    'created_at' => $notification->getAttribute('created_at')->diffForHumans(now()),
                 ]
             ])
             ->toArray();
@@ -46,6 +56,8 @@ class Notifications extends Component
             $notification->markAsRead();
         }
 
+        $this->dispatch('updated')->to(NotificationsButton::class);
+
         /** @var array $data */
         $data = $notification->getAttribute('data');
         $this->redirect($data['url']);
@@ -57,6 +69,8 @@ class Notifications extends Component
         $this->user->notifications()
             ->whereIn('id', $this->selected)
             ->update(['read_at' => now()]);
+
+        $this->dispatch('updated')->to(NotificationsButton::class);
     }
 
     public function markAsUnread(): void
@@ -64,6 +78,7 @@ class Notifications extends Component
         $this->user->notifications()
             ->whereIn('id', $this->selected)
             ->update(['read_at' => null]);
+        $this->dispatch('updated')->to(NotificationsButton::class);
     }
 
     public function loadMore(): void

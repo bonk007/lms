@@ -14,7 +14,7 @@ class Conversation extends Model
     public function participants(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivotValue('is_initiator');
+            ->withPivot('is_initiator');
     }
 
     public function messages(): HasMany

@@ -56,7 +56,7 @@ class RoleSeeder extends Seeder
                 'privileges' => Arr::except($permission, 'name')
             ]);
 
-        ['initiated_by' => 1, 'name' => 'Teknik Informatika - UNPAD'];
+//        ['initiated_by' => 1, 'name' => 'Teknik Informatika - UNPAD'];
 
     }
 

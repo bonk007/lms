@@ -1,4 +1,6 @@
 import axios from 'axios'
+import './echo.js'
+
 window.axios = axios
 
 const csrf = () => {

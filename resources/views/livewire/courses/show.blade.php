@@ -51,6 +51,6 @@
         <livewire:calendar :title="'Agenda'" />
     @endif
     @if($activeTab === '#discussions')
-        <livewire:discussion.panel />
+        <livewire:discussion.panel :course="$course" />
     @endif
 </div>

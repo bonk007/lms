@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Discussion;
 
+use App\Models\Course;
+use App\Models\Discussion;
+use App\Models\Post;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -31,10 +34,30 @@ class InlineForm extends Component
      */
     public $attachment;
 
+    public ?Course $course = null;
+
+    public ?Discussion $discussion = null;
+
 
     public function removeQuoted(): void
     {
         $this->quoted = null;
+    }
+
+    public function post(): void
+    {
+
+        if ($this->discussion === null) {
+            return;
+        }
+
+        $this->discussion->posts()->create([
+            'content' => $this->message,
+            'user_id' => auth()->id(),
+        ]);
+
+        $this->reset('message', 'quoted', 'attachment');
+        $this->dispatch('reload')->to(Container::class);
     }
 
     public function render(): View

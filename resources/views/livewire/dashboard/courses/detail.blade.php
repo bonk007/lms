@@ -23,8 +23,12 @@
                 </div>
             </div>
         </div>
-        <div class="w-1/4">
-
+        <div class="w-1/4 py-4 px-8 flex flex-col">
+            @foreach($subPages as $index => $subPage)
+            <a href="#"
+               wire:click.prevent="toSubPage({{$index}})"
+               class="px-4 py-2 border-b border-dotted border-blue-600 {{ $subPageIndex === $index ? 'font-bold' : '' }}">{{ __($subPage) }}</a>
+            @endforeach
         </div>
     </div>
 </div>
