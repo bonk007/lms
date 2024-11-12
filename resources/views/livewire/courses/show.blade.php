@@ -36,7 +36,7 @@
                class="px-4 py-2"
                :class="isActiveTab($el) && 'border-b-4 border-red-500 text-slate-900 dark:text-slate-50'"
                id="assignments"
-               @click.prevent="switchTab($el)">{{ __('Assigments') }}</a>
+               @click.prevent="switchTab($el)">{{ __('Assignments') }}</a>
             <a href="#"
                class="px-4 py-2"
                :class="isActiveTab($el) && 'border-b-4 border-red-500 text-slate-900 dark:text-slate-50'"
@@ -49,6 +49,9 @@
     @endif
     @if($activeTab === '#agenda')
         <livewire:calendar :title="'Agenda'" />
+    @endif
+    @if($activeTab === '#assignments')
+        <livewire:assignments.panel :course="$course" />
     @endif
     @if($activeTab === '#discussions')
         <livewire:discussion.panel :course="$course" />

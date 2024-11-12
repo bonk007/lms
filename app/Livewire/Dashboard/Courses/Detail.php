@@ -11,10 +11,10 @@ class Detail extends Component
     public Course $course;
 
     public array $subPages = [
-        'Topics',
-        'Participants',
-        'Assignments',
-        'Discussions',
+        ['title' => 'Topics', 'component' => 'dashboard.courses.topics'],
+        ['title' => 'Participants', 'component' => null],
+        ['title' => 'Assignments', 'component' => 'dashboard.assignment.panel'],
+        ['title' => 'Discussions', 'component' => 'discussion.panel'],
     ];
 
     public int $subPageIndex = 0;

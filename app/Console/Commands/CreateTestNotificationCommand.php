@@ -27,7 +27,7 @@ class CreateTestNotificationCommand extends Command
      */
     public function handle(): void
     {
-        $user = User::find(1);
+        $user = User::find(50);
 
         $user->notify(new TestNotification());
 

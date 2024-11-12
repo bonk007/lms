@@ -25,6 +25,7 @@ Route::middleware(['auth', \App\Http\Middleware\ActivityRecording::class])->grou
     Route::view('/notifications', 'components.pages.notifications')->name('notifications');
     Route::get('/courses/{course}', [\App\Http\Controllers\CourseController::class, 'show'])->name('courses.show');
     Route::get('/courses/{course}/topics/{topic}', [\App\Http\Controllers\TopicController::class, 'show'])->name('courses.topics.show');
+    Route::get('/courses/{course}/assignment/{assignment}', \App\Http\Controllers\AssignmentController::class)->name('courses.assignment.show');
     Route::get('/sections/{section}', [\App\Http\Controllers\SectionController::class, 'show'])->name('section.show');
     Route::get('/quiz-attempt/{attempt}', [\App\Http\Controllers\QuizController::class, 'attempt'])->name('quiz.attempt');
 
@@ -37,6 +38,7 @@ Route::middleware(['auth', \App\Http\Middleware\ActivityRecording::class])->grou
             Route::resource('courses', \App\Http\Controllers\Dashboard\CourseController::class);
             Route::get('courses/{course}/topics/create', [\App\Http\Controllers\Dashboard\TopicController::class, 'create'])->name('topics.create');
             Route::get('courses/{course}/topics/{topic}/edit', [\App\Http\Controllers\Dashboard\TopicController::class, 'edit'])->name('topics.edit');
+            Route::get('courses/{course}/assignments/{assignment}', \App\Http\Controllers\Dashboard\AssignmentController::class)->name('assignment');
             Route::resource('resources', \App\Http\Controllers\Dashboard\ResourceController::class);
             Route::resource('quizzes', \App\Http\Controllers\Dashboard\QuizController::class)
                 ->only(['index', 'create', 'edit']);

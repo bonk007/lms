@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Discussion\Modal;
 
+use App\Livewire\Discussion\Container;
 use App\Livewire\Discussion\Panel;
 use App\Models\Course;
 use App\Models\Discussion;
@@ -24,7 +25,7 @@ class InitialDiscussion extends ModalComponent
         $discussion = DB::transaction(function () {
             $discussion = Discussion::query()->create([
                 'title' => $this->title,
-                'content' => $this->content,
+//                'content' => $this->content,
                 'course_id' => $this->course?->id,
                 'created_by' => auth()->id(),
             ]);
@@ -39,7 +40,9 @@ class InitialDiscussion extends ModalComponent
             return $discussion;
         });
 
-        $this->dispatch('setDiscussion', $discussion)->to(Panel::class);
+        $this->dispatch('setDiscussion', $discussion->getKey())->to(Panel::class);
+        $this->dispatch('reload')->to(Container::class);
+
         $this->closeModal();
 
     }
