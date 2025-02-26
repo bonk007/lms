@@ -1,7 +1,6 @@
 import './bootstrap'
 import ckeditor from './ckeditor'
 import turnDown from './turndown'
-import './hotjar'
 
 window.ckeditor = ckeditor
 window.turnDown = turnDown
