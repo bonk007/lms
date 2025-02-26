@@ -71,6 +71,8 @@
         @php
             $day = 0;
             $cols = 35;
+            $items = 0;
+            $now = now();
         @endphp
         @for($idx = 0; $idx < $cols; $idx++)
             @php
@@ -84,11 +86,30 @@
                 }
 
                 $dateObject = \Illuminate\Support\Carbon::create($this->selectedYear, $this->selectedMonth, $day);
-                $isToday = now()->isSameDay($dateObject);
+
+                if (is_int($now)) {
+                    dd($now);
+                }
+                $isToday = $now->isSameDay($dateObject);
+
+                $items = $agendas->where(function ($agenda) use($dateObject) {
+                    return $agenda->getAttribute('going_at')->isSameDay($dateObject);
+                })->count();
 
             @endphp
             @if($day > 0 && $day <= $this->currentMonthAttributes['endDate'])
-                <x-chunks.calendar-tile :date="$dateObject" :holiday="($idx === 0) || ($idx % 7 === 0)" />
+                <x-chunks.calendar-tile
+                    x-on:click.prevent="$dispatch('openModal', {component: 'modal.calendar-detail', arguments: {course: {{ $course?->id ?? 'null' }}, selected: '{{ $dateObject }}'}})"
+                    :date="$dateObject"
+                    :holiday="($idx === 0) || ($idx % 7 === 0)">
+                @if($items > 0)
+                    <div class="flex gap-2">
+                        @for($i = 0; $i < $items; $i++)
+                            <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                        @endfor
+                    </div>
+                @endif
+                </x-chunks.calendar-tile>
             @else
                 <div class="border rounded py-4 px-4 bg-slate-300"></div>
             @endif

@@ -2,16 +2,20 @@
 
 namespace App\Livewire\Courses\Topics;
 
+use App\Livewire\Traits\HasAlert;
 use App\Models\Course;
 use App\Models\Sessions\CourseSession;
 use App\Models\Sessions\TopicSession;
 use App\Models\Topic;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class Stack extends Component
 {
+    use HasAlert;
+
     public Course $course;
 
     public ?CourseSession $courseSession = null;
@@ -27,6 +31,10 @@ class Stack extends Component
 
     public function startSession(Topic $topic): void
     {
+        if (Gate::forUser(auth()->user())->denies('view', $this->course)) {
+            $this->error("You should enroll the course before you access the topic.");
+        }
+
         if ($this->courseSession?->getKey() === null) {
             return;
         }

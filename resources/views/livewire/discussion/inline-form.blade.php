@@ -38,7 +38,7 @@
 {{--                label="{{ __('Description') }}"--}}
                 name="message"
                 id="post-message"
-                wire:model="message" />
+wire:model="message">{{ $message }}</x-forms.inputs.wysiwyg>
         </div>
         <a href="#" class="p-4" wire:click.prevent="post">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

@@ -27,21 +27,24 @@ class Attempt extends Component
     public function mount(): void
     {
         $this->attempt->loadMissing([
-            'snapshot'
+            'snapshot.course'
         ]);
 
         $this->snapshot = $this->attempt->snapshot;
         $this->quizData = $this->snapshot->getAttribute('quiz_data');
 
+//        dd($this->currentSection);
 
         $structure = $this->snapshot?->structure;
-        $this->currentSection = $this->attempt->progress === null ? 0 : count($this->attempt->progress);
-        $this->currentStructure = $structure[$this->currentSection] ?? [];
 
-        if (empty($this->currentStructure) || $this->attempt->getAttribute('ended_at') !== null) {
-            $this->dispatch('completed');
+        $this->currentSection = $this->attempt->progress === null ? 0 : count($this->attempt->progress);
+
+        if (!isset($structure[$this->currentSection]) || $this->attempt->getAttribute('ended_at') !== null) {
+            $this->completed();
             return;
         }
+
+        $this->currentStructure = $structure[$this->currentSection];
 
         $this->initProgressData();
 
@@ -129,7 +132,8 @@ class Attempt extends Component
 
     public function completed(): void
     {
-
+        $course = $this->snapshot->course;
+        $this->redirectRoute('courses.show', compact('course'));
     }
 
     public function render(): View

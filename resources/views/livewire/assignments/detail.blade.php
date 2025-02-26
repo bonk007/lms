@@ -30,8 +30,8 @@
         <div>{!! \Illuminate\Support\Str::markdown($assignment->description) !!}</div>
     </div>
 
-    @if(null === $attempt)
-        <a href="#">{{ __('Submit your response') }}</a>
+    @if(null === $attempt && !$assignment->getAttribute('is_expired'))
+        <a href="#" wire:click.prevent="$dispatch('openModal', {component: 'assignments.modal.assignment-submission', arguments: {assignment: @js($assignment->id) }})">{{ __('Submit your response') }}</a>
     @else
     <div>
         <span class="text-sm font-semibold">{{ __("Score") }}</span>

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Dashboard\Assignment;
 
+use App\Models\Agenda;
 use App\Models\Assignment;
 use App\Models\Attachment;
 use App\Models\Course;
+use App\Models\Enrollment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -35,6 +37,12 @@ class Form extends ModalComponent
 
     public array $minDateTime = [];
 
+    public function mount()
+    {
+        $this->course->loadMissing([
+            'enrollments.user'
+        ]);
+    }
 
     public function boot(): void
     {
@@ -93,7 +101,7 @@ class Form extends ModalComponent
     public function saved(): void
     {
         $this->makeAttachment();
-
+        $this->assignToAgenda();
         $this->dispatch('reload')->to(Panel::class);
         $this->closeModal();
     }
@@ -172,6 +180,22 @@ class Form extends ModalComponent
             'days' => 3,
             default => null
         };
+    }
+
+    protected function assignToAgenda(): void
+    {
+        $this->course->enrollments->each(function (Enrollment $enrollment) {
+            $enrollment->user->agendas()
+                ->create([
+                    'going_at' => $this->assignment->getAttribute('started_at'),
+                    'title' => "Assignment: " . $this->assignment?->title ?? '',
+                    'subtitle' => $this->course?->title ?? '',
+                    'action_url' => route('courses.assignment.show', [
+                        'course' => $this->course, 'assignment' => $this->assignment]),
+                    'course_id' => $enrollment->getAttribute('course_id'),
+                ]);
+        });
+
     }
 
     public function render(): View

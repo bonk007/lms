@@ -10,8 +10,11 @@
     <div x-data="{
         shouldBeHtml: $wire.entangle('isHTML'),
         toggle() {
+
             this.shouldBeHtml = !this.shouldBeHtml
             $wire.set('isHTML', this.shouldBeHtml)
+
+            console.log(this.shouldBeHtml)
         }
     }">
 

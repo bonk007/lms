@@ -19,10 +19,20 @@ class Detail extends Component
 
     public ?float $score = null;
 
+    protected $listeners = [
+        'attempted'
+    ];
+
     public function boot(): void
     {
         $this->attempt = $this->assignment->getAttribute('attempts')->first();
         $this->score = $this->attempt?->getAttribute('scores');
+    }
+
+    public function attempted(AssignmentAttempt $attempt): void
+    {
+        $this->attempt = $attempt;
+        $this->reset();
     }
 
     public function render(): View

@@ -4,8 +4,8 @@
     <livewire:elements.alert/>
     <div class="flex flex-col h-screen bg-slate-50 dark:bg-slate-900">
 
-        <div class="w-full flex items-center gap-4 pr-20">
-            <a href="" class="logo italic py-2 flex flex-col pl-20 pr-4 bg-slate-900 dark:bg-slate-50 text-slate-50 dark:text-slate-950 hover:text-slate-50 hover:bg-red-500">
+        <div class="w-full flex items-center gap-4 pr-20 relative z-10 dark:bg-slate-900/50">
+            <a href="{{ route('home') }}" class="logo italic py-2 flex flex-col pl-20 pr-4 bg-slate-900 dark:bg-slate-50 text-slate-50 dark:text-slate-950 hover:text-slate-50 hover:bg-red-500">
                 <span class="font-semibold text-2xl">LMS</span>
                 <span class="text-sm">Adaptive UI/UX</span>
             </a>
@@ -38,5 +38,8 @@
             </div>
         </div>
 
+        @auth
+            <x-tracker />
+        @endauth
     </div>
 @endsection

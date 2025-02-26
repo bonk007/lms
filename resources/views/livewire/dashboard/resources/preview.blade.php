@@ -11,7 +11,15 @@
         <div class="mb-2 text-xl">Abstract</div>
         {!! \Illuminate\Support\Str::markdown($resource->getAttribute('abstract')) !!}
     </div>
-
+    @if($resource->getAttribute('slides')->isNotEmpty())
+        @foreach($resource->getAttribute('slides') as $num => $slide)
+            <div class="flex justify-center items-center">
+                <a href="#"
+                   class="font-semibold px-6 py-3 text-red-500 border border-red-500"
+                   wire:click.prevent="$dispatch('openModal', {component: 'resources.slide', arguments: {slide: {{ $slide->getKey() }} } } )">Open the Slides #{{ $num + 1 }}</a>
+            </div>
+        @endforeach
+    @endif
     @if($resource->getAttribute('downloadable'))
     <div class="flex justify-center items-center">
         <a href="{{ $resource->getAttribute('content_url') }}"

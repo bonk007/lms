@@ -1,5 +1,5 @@
 <x-dashboard.layout>
     <div>
-        Home
+        <livewire:dashboard.eye-tracker-downloader />
     </div>
 </x-dashboard.layout>

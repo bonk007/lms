@@ -11,6 +11,11 @@ class Preview extends Component
 
     public Resource $resource;
 
+    public function mount(): void
+    {
+        $this->resource->loadMissing(['slides']);
+    }
+
     public function render(): View
     {
         return view('livewire.dashboard.resources.preview');

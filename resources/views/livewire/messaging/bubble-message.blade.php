@@ -5,7 +5,7 @@
         @endif
         <div class="flex flex-col w-1/2 px-4 py-2.5 border rounded-xl {{ !$isOwned ? 'rounded-tl-none' : 'rounded-tr-none' }}">
             @if(!$isOwned)
-            <a href="#" class="font-bold">{{ $message->getAttribute('sender')?->getAttribute('name') }}</a>
+            <a href="{{ route('profile', ['user' => $message->sender->id]) }}" class="font-bold">{{ $message->getAttribute('sender')?->getAttribute('name') }}</a>
             @endif
             <div>
                 {{ $message->getAttribute('content') }}

@@ -34,7 +34,7 @@ class QuizAttempt extends Model
         parent::boot();
 
         static::saving(static function (QuizAttempt $attempt) {
-//            $attempt->doCorrection();
+            $attempt->doCorrection();
         });
     }
 
@@ -50,11 +50,11 @@ class QuizAttempt extends Model
 
     public function doCorrection(): void
     {
-        $this->loadMissing(['quizSnapshot']);
-        $snapshot = $this->getAttribute('quizSnapshot');
+        $this->loadMissing(['snapshot']);
+        $snapshot = $this->getAttribute('snapshot');
         $quizData = $snapshot->getAttribute('quiz_data');
 
-        if (null === $this->progress || !$quizData['auto_correction']) {
+        if (null === $this->progress || !$quizData['automated_scoring']) {
             return;
         }
 
@@ -69,7 +69,7 @@ class QuizAttempt extends Model
 
                 $progress->where('question_id', $question->id)
                     ->transform(function (array $item) use ($question) {
-
+//                        dd($item, $question->toArray());
                     });
             });
     }
@@ -90,5 +90,15 @@ class QuizAttempt extends Model
     public function snapshot(): BelongsTo
     {
         return $this->belongsTo(QuizSnapshot::class, 'quiz_snapshot_id');
+    }
+
+    public function scoringStatusText(): Attribute
+    {
+        return new Attribute(get: function() {
+            $status = ["pending", "on going", "completed"];
+            $scoringStatus = $this->getAttribute('scoring_status');
+
+            return $status[$scoringStatus] ?? $status[0];
+        });
     }
 }

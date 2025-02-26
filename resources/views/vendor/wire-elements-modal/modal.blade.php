@@ -44,7 +44,7 @@
 {{--                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"--}}
                     x-transition:leave-end="opacity-0 sm:scale-95"
                     x-bind:class="modalWidth"
-                    class="bg-white dark:bg-slate-900 border px-8 py-4 text-left overflow-hidden shadow-xl transform transition-all mx-auto sm:align-middle w-1/2"
+                    class="bg-white dark:bg-slate-900 border px-8 py-4 text-left overflow-hidden shadow-xl transform transition-all mx-auto sm:align-middle min-w-1/2"
 {{--                    id="modal-container"--}}
                     x-trap.noscroll.inert="show && showActiveComponent"
                     aria-modal="true"

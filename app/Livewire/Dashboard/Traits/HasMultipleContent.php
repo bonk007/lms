@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard\Traits;
 
+use App\Models\Slide;
 use App\Services\Cloudflare\VideoUploader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ trait HasMultipleContent
     /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile */
     public $file;
 
-    public function getValidatedData(array $additionalRules = []): array
+    public function getValidatedData(array $additionalRules = [], bool $updated = false): array
     {
         return Arr::except([
             ... $this->validate([
@@ -20,7 +21,9 @@ trait HasMultipleContent
                 ...[
                     'isHTML' => ['bool'],
                     'content' => ['required_if:isHTML,true'],
-                    'file' => ['required_if:isHTML,false', 'nullable', 'file', 'mimes:pdf,doc,docx,mp4,avi,mov,webm'],
+                    'file' => !$updated
+                        ? ['required_if:isHTML,false', 'nullable', 'file', 'mimes:pdf,doc,docx,mp4,avi,mov,webm']
+                        : ['nullable', 'file', 'mimes:pdf,doc,docx,mp4,avi,mov,webm'],
                 ],
             ]),
             ...[
@@ -43,10 +46,30 @@ trait HasMultipleContent
         $name = Str::random(8) . '.' . $this->file->extension();
 
         if ($this->resource !== null && !$this->isDownloadable()) {
-            return (new VideoUploader($this->resource))->upload($modelClass, $this->file, auth()->user());
+            if ($this->streamable()) {
+                return (new VideoUploader($this->resource))->upload($modelClass, $this->file, auth()->user());
+            }
+
+            return null;
         }
 
         return $this->file->storeAs($path, $name);
+    }
+
+    public function createSlide(): Slide
+    {
+        $slide = new Slide();
+
+        $slide->user()->associate(auth()->user())->save();
+
+        $this->resource->slides()->attach($slide->id);
+
+        return $slide;
+    }
+
+    protected function streamable(): bool
+    {
+        return !in_array($this->file->extension(), ['mp4', 'avi', 'mov', 'webm']);
     }
 
     protected function isDownloadable(): bool
@@ -55,7 +78,7 @@ trait HasMultipleContent
             return false;
         }
 
-        return !in_array($this->file->extension(), ['mp4', 'avi', 'mov', 'webm']);
+        return !$this->streamable() && !in_array($this->file->extension(), ['pdf', 'ppt', 'pptx']);
     }
 
     protected function contentMime(): string

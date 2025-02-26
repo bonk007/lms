@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="flex-1">
-            <livewire:messaging.panel :user="auth()->user()" />
+            <livewire:messaging.panel :open="request()->has('create')" :selected-conversation="$conversation" :start-new="request()->has('create')" :user="auth()->user()" />
         </div>
     </div>
 

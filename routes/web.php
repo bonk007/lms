@@ -17,11 +17,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth', \App\Http\Middleware\ActivityRecording::class])->group(function () {
+
+    Route::post('/gazer-tracks', \App\Http\Controllers\GazerController::class)->name('gazer');
+
     Route::get('/profile/{user?}', [ProfileController::class, 'view'])->name('profile');
     Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::view('/agenda', 'components.pages.agenda')->name('agenda');
-    Route::view('/messages', 'components.pages.messaging')->name('messages');
+    Route::get('/messages', \App\Http\Controllers\MessagingController::class)->name('messages');
     Route::view('/notifications', 'components.pages.notifications')->name('notifications');
     Route::get('/courses/{course}', [\App\Http\Controllers\CourseController::class, 'show'])->name('courses.show');
     Route::get('/courses/{course}/topics/{topic}', [\App\Http\Controllers\TopicController::class, 'show'])->name('courses.topics.show');

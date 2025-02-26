@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -36,11 +37,24 @@ class Form extends Component
 
     public Collection $instances;
 
-    public function boot(): void
+    public function mount(): void
     {
         $this->user = auth()->user();
         $this->instances = $this->user->initiatedInstances()->get();
-        $this->instance = $this->instances->first();
+        $this->instance = $this->getInstance();
+        $this->name = $this->course?->name ?? '';
+        $this->description = $this->course?->description ?? '';
+    }
+
+    protected function getInstance(): Instance
+    {
+        if (null === $this->course) {
+            return $this->instances->first();
+        }
+
+        $this->course->loadMissing(['instance']);
+
+        return $this->course->instance;
     }
 
     public function cancel(): void
@@ -97,11 +111,18 @@ class Form extends Component
 
     protected function saveFile(): string
     {
-        $dir = $this->instance->getKey() . '/courses/banners';
-        $extension = $this->upload->getExtension();
-        $name = Str::random() . '.'. $extension;
+        [$file] = $this->upload;
 
-        return $this->upload->storeAs($dir, $name);
+        $dir = $this->instance->getKey() . '/courses/banners';
+        $extension = $file['extension'] ?? null;
+        $name = Str::random() . '.'. $extension;
+        $tmpContent = Storage::disk('s3')->get($file['path']);
+
+        Storage::disk('s3')->put($dir.'/'.$name, $tmpContent);
+
+//        $result = $this->upload->storeAs($dir, $name, ['disk' => 's3']);
+
+        return Storage::disk('s3')->url($dir.'/'.$name);
     }
 
     public function render(): View

@@ -12,5 +12,6 @@
     @yield('content')
     @livewireScripts
     @livewire('wire-elements-modal')
+    @stack('scripts')
 </body>
 </html>

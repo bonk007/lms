@@ -2,7 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Agenda;
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 
@@ -14,13 +18,17 @@ class Calendar extends Component
 
     public int $selectedYear;
 
+    public ?Course $course = null;
+
+    public User $user;
+
     public array $currentMonthAttributes = [
         'startDayInWeek' => 0,
         'endDayInWeek' => 0,
         'endDate' => null,
     ];
 
-    public function boot(): void
+    public function mount(): void
     {
         $this->selectedMonth = now()->month;
         $this->selectedYear = now()->year;
@@ -40,8 +48,22 @@ class Calendar extends Component
         ];
     }
 
+    protected function agendas(): Collection
+    {
+        $date = Carbon::create($this->selectedYear, $this->selectedMonth) ?? now();
+        $startMonth = $date->startOfMonth()->toImmutable();
+        $endMonth = $date->endOfMonth();
+
+        return Agenda::query()
+            ->whereBelongsTo($this->user, 'user')
+            ->whereBetween('going_at', [$startMonth, $endMonth])
+            ->when($this->course !== null, function ($query) {
+                return $query->whereBelongsTo($this->course, 'course');
+            })->get();
+    }
+
     public function render(): View
     {
-        return view('livewire.calendar');
+        return view('livewire.calendar', ['agendas' => $this->agendas()]);
     }
 }

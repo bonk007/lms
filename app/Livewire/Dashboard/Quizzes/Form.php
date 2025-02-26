@@ -29,7 +29,7 @@ class Form extends Component
 
     public ?int $duration = null;
 
-    public function boot(): void
+    public function mount(): void
     {
         $this->title = $this->quiz?->title ?? '';
         $this->subtitle = $this->quiz?->subtitle ?? '';

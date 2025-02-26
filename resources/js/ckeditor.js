@@ -253,13 +253,12 @@ const editorConfig = {
   }
 };
 
-
 export default function ($elm, onInitialized = undefined, onError = undefined) {
   if (!$elm) {
     return
   }
 
-  return ClassicEditor.create($elm, editorConfig)
+  const editor = ClassicEditor.create($elm, editorConfig)
     .then($editor => {
 
       if (onInitialized) {
@@ -273,4 +272,8 @@ export default function ($elm, onInitialized = undefined, onError = undefined) {
         onError(error)
       }
     })
+
+  window.CK = editor
+
+  return editor
 }

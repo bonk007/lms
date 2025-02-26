@@ -80,6 +80,11 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class, 'user_id');
     }
 
+    public function agendas(): HasMany
+    {
+        return $this->hasMany(Agenda::class, 'user_id');
+    }
+
     public function createdCourses(): HasMany
     {
         return $this->hasMany(Course::class, 'created_by');

@@ -3,7 +3,7 @@
 
     <div class="py-8">
         <div>
-            <div>{{ __("Assignment: :title", ['title' => $assignment->title]) }}</div>
+            <div class="text-2xl font-semibold">{{ __("Assignment: :title", ['title' => $assignment->title]) }}</div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('home') }}" class="hover:text-red-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">

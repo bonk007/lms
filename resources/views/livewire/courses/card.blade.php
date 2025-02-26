@@ -1,5 +1,5 @@
 <div class="rounded border dark:border-slate-700">
-    <div class="h-48 flex flex-col justify-between bg-cover" style="background-image: url({{ asset('storage/computer.jpg') }})">
+    <div class="h-48 flex flex-col justify-between bg-cover" style="background-image: url({{ $course->getAttribute('banner') ?? asset('storage/computer.jpg') }})">
         <div class="px-4 py-1 text-xs italic text-right bg-slate-50/75 dark:bg-slate-50/10">
             {{ __('Published at') }} <span>{{ $course->getAttribute('created_at')->toFormattedDateString() }}</span>
         </div>

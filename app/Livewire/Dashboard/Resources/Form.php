@@ -48,7 +48,7 @@ class Form extends Component
         $data = $this->getValidatedData([
             'title' => ['required', 'max:255'],
             'abstract' => ['required'],
-        ]);
+        ], $this->resource instanceof Resource);
 
         DB::transaction(function () use ($data) {
             if ($this->resource instanceof Resource) {

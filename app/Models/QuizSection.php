@@ -6,6 +6,7 @@ use App\Models\Contracts\CourseContent;
 use App\Models\Traits\Sortable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection as ModelCollection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -60,13 +61,13 @@ class QuizSection extends Model implements CourseContent
         return new Attribute(get: function (): ModelCollection|Collection {
 
             /** @var \Illuminate\Database\Eloquent\Collection $questions */
-            $questions = $this->loadMissing(['questions'])->questions;
+            $questions = $this->loadMissing(['questions' => function (HasMany $many) {
+                return $this->getAttribute('random_order_questions') !== true
+                    ? $many->inRandomOrder()
+                    : $many;
+            }])->questions;
 
-            if ($this->getAttribute('random_order_questions') !== true || $questions->isEmpty()) {
-                return $questions;
-            }
-
-            return $questions->random();
+            return $questions;
 
         });
     }

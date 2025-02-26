@@ -46,7 +46,6 @@ class InlineForm extends Component
 
     public function post(): void
     {
-
         if ($this->discussion === null) {
             return;
         }
@@ -56,8 +55,10 @@ class InlineForm extends Component
             'user_id' => auth()->id(),
         ]);
 
-        $this->reset('message', 'quoted', 'attachment');
+//        $this->reset('message', 'quoted', 'attachment');
+        $this->message = '';
         $this->dispatch('reload')->to(Container::class);
+        $this->dispatch('clear-editor');
     }
 
     public function render(): View

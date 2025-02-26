@@ -1,11 +1,16 @@
 <div class="flex flex-col gap-4">
 
-    <x-forms.inputs.dropzone
-        label="Banner"
-        name="banner"
-        id="banner"
-        wire:model="uploadedFile"
-        :rules="['image', 'max:1024']" />
+{{--    <x-forms.inputs.dropzone--}}
+{{--        label="Banner"--}}
+{{--        name="banner"--}}
+{{--        id="banner"--}}
+{{--        wire:model="upload"--}}
+{{--        :rules="['image', 'max:1024']" />--}}
+    <livewire:dropzone
+        wire:model="upload"
+        wire:key="dz-1"
+        :rules="['image', 'max:1024']"
+        :multiple="false" />
 
     <x-forms.inputs.select
         label="Instance"

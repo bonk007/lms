@@ -2,6 +2,11 @@
     <x-slot:title>Register</x-slot:title>
     <div class="flex justify-center items-center h-full">
         <form method="post" class="w-1/4 flex flex-col gap-4">
+            @if(!empty($message))
+                <div class="{{ $success ? 'border-green-600 bg-green-500/30' : 'border-red-600 bg-red-500/30' }} px-6 py-3">
+                    {{ $message }}
+                </div>
+            @endif
             @csrf
             <x-forms.inputs.text
                 autocomplete="false"

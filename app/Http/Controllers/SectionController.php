@@ -11,7 +11,7 @@ class SectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Section $section)
+    public function show(Request $request, Section $section)
     {
         $section->loadMissing([
             'topic.course',
@@ -20,6 +20,10 @@ class SectionController extends Controller
         $topic = $section->topic;
         $course = $section->topic->course;
         $content = $section->content;
+
+        if ($request->user()->cannot('view', $course)) {
+            abort(403, 'You do not have permission to view the section.');
+        }
 
         if ($content instanceof Resource) {
             $contentTitle = $content->title;
