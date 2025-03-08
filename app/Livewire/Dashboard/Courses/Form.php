@@ -40,10 +40,13 @@ class Form extends Component
     public function mount(): void
     {
         $this->user = auth()->user();
-        $this->instances = $this->user->initiatedInstances()->get();
+        $this->instances = $this->user->contributors()->get()->merge(
+            $this->user->initiatedInstances()->get()
+        );
         $this->instance = $this->getInstance();
         $this->name = $this->course?->name ?? '';
         $this->description = $this->course?->description ?? '';
+
     }
 
     protected function getInstance(): Instance
