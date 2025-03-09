@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4">
+<div>
     <div class="flex items-center justify-end gap-4">
         <x-forms.search id="search" name="search" wire:model="search" wire:change="onSearch" />
         <x-forms.inputs.select wire:model="groupBy" wire:change="onSearch" id="group" name="group" label="Group" label-position="left">
@@ -18,7 +18,7 @@
         showConfirmation(kind, id) {
             $dispatch('need-confirmation', {kind, id})
         }
-    }" class="flex-1 flex flex-col gap-2">
+    }" class="flex flex-col gap-2 my-4">
     @forelse($resources as $key => $resource)
 {{--        <livewire:dashboard.resources.stack-item :$resource />--}}
         <div class="border px-4 py-2.5 bg-white dark:bg-slate-700">
