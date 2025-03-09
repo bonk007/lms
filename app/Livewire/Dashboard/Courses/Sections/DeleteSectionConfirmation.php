@@ -3,36 +3,23 @@
 namespace App\Livewire\Dashboard\Courses\Sections;
 
 use App\Livewire\Dashboard\Courses\TopicItem;
-use App\Livewire\Traits\HasAlert;
 use App\Models\Section;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 
 class DeleteSectionConfirmation extends ModalComponent
 {
-    use HasAlert;
+    public ?Section $section = null;
 
-    public Section $section;
-
-    public function delete(): void
+    public function mount(Section $section): void
     {
-        $this->section->loadMissing(['topic']);
-        /** @var \App\Models\Topic $topic */
-        $topic = $this->section->topic;
-
-        if ($topic->published) {
-            $this->error(__("Can not delete section from published topic"));
-            return;
-        }
-
-        $this->section->delete();
-        $this->confirmed();
+        $this->section = $section;
     }
 
-    protected function confirmed(): void
+    public function confirmed(): void
     {
-        $this->dispatch('reload')->to(TopicItem::class);
         $this->closeModal();
+        $this->dispatch('deleteSectionConfirmed', $this->section)->to(TopicItem::class);
     }
 
     public function render(): View

@@ -3,7 +3,7 @@
         const [param] = $event.detail
         $wire.select(param.resource)
     }
-}">
+}" class="max-h-full max-w-full my-4 mx-8">
     <div class="px-4 py-3 text-xl" x-on:resource-selected.window="resourceSelected($event)">
         {{ __("Select Resource") }}
     </div>

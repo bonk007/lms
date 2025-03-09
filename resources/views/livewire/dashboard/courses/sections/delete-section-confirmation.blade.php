@@ -7,7 +7,7 @@
         <x-buttons.link href="#" wire:click.prevent="closeModal">
             <span>{{ __("Cancel") }}</span>
         </x-buttons.link>
-        <x-buttons.link href="#" kind="primary" wire:click.prevent="delete">
+        <x-buttons.link href="#" kind="primary" wire:click.prevent="confirmed">
             <span>{{ __("Confirmed") }}</span>
         </x-buttons.link>
     </div>

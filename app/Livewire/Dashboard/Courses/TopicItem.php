@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Dashboard\Courses;
 
+use App\Livewire\Traits\HasAlert;
+use App\Models\Section;
 use App\Models\Topic;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
@@ -9,11 +11,31 @@ use Livewire\Component;
 
 class TopicItem extends Component
 {
+    use HasAlert;
+
     public Topic $topic;
 
     protected $listeners = [
-        'reload'
+        'reload',
+        'deleteSectionConfirmed'
     ];
+
+    public function deleteSectionConfirmed(Section $section): void
+    {
+        $section->loadMissing(['topic']);
+        /** @var \App\Models\Topic $topic */
+        $topic = $section->topic;
+
+        if ($topic->published) {
+            $this->error(__("Can not delete section from published topic"));
+            return;
+        }
+
+        $section->delete();
+
+        $this->success("Section has been deleted");
+        $this->reload();
+    }
 
     public function boot(): void
     {
