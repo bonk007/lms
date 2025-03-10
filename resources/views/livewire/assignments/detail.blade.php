@@ -31,7 +31,9 @@
     </div>
 
     @if(null === $attempt && !$assignment->getAttribute('is_expired'))
-        <a href="#" wire:click.prevent="$dispatch('openModal', {component: 'assignments.modal.assignment-submission', arguments: {assignment: @js($assignment->id) }})">{{ __('Submit your response') }}</a>
+        <a href="#"
+           class="bg-slate-950 dark:bg-green-600 dark:hover:bg-green-400 hover:bg-red-500 text-slate-50 px-8 py-3 rounded"
+           wire:click.prevent="$dispatch('openModal', {component: 'assignments.modal.assignment-submission', arguments: {assignment: @js($assignment->id) }})">{{ __('Submit your response') }}</a>
     @else
     <div>
         <span class="text-sm font-semibold">{{ __("Score") }}</span>
