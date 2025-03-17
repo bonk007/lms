@@ -1,6 +1,7 @@
 import './bootstrap'
 import ckeditor from './ckeditor'
 import turnDown from './turndown'
+import PdfViewer from "./pdf-viewer.js";
 
 window.ckeditor = ckeditor
 window.turnDown = turnDown
@@ -15,3 +16,5 @@ window.subscribePrivateChannel = (user) => {
   // return Echo.private(`App.Models.User.${user}`)
   //   .notification(notification => console.log(notification))
 }
+
+window.PdfViewer = PdfViewer

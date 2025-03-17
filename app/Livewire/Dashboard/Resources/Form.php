@@ -56,7 +56,7 @@ class Form extends Component
             } else {
                 $this->create($data);
             }
-            $this->uploadFile(get_class($this->resource));
+            $this->resource?->update(['content_url' => $this->uploadFile(get_class($this->resource))]);
         });
 
         $this->dispatch('saved');

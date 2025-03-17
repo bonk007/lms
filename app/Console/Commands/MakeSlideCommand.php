@@ -44,9 +44,10 @@ class MakeSlideCommand extends Command
         $slide->user()->associate($user)->save();
         $items = [];
 
-        for($i = 1; $i <= 43; $i++) {
+        for($i = 1; $i <= 11; $i++) {
             $number = str_pad($i, 4, 0, STR_PAD_LEFT);
-            $items[] = ["img" => "https://cdn.ibonk.id/slides/02.1%20Psikologi%20Dasar%20%E2%80%93%20Kognitif%20Manusia_page-$number.jpg"];
+//            $number = $i;
+            $items[] = ["img" => "https://cdn.ibonk.id/ILOVEPDF/GNP2425-2_page-" .$number. ".jpg"];
         }
 
         $slide->items()->createMany($items);
@@ -70,7 +71,7 @@ class MakeSlideCommand extends Command
     protected function resource(User $creator): Resource
     {
         $id = select(
-            label: 'Who will be a initiator?',
+            label: 'Which is the resource?',
             options: Resource::query()->whereBelongsTo($creator, 'creator')->pluck('title', 'id'),
             required: true
         );

@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4 ">
-    @if($resource->getAttribute('streaming') && null !== $resource->getAttribute('content_url'))
+    @if($resource->getAttribute('streamable'))
         <div class="flex justify-center bg-black">
             <div style="width: 900px; height: 480px" class="mx-auto">
                 <x-video-player :uid="$resource->getAttribute('content_url')" />
@@ -11,13 +11,17 @@
         <div class="mb-2 text-xl">Abstract</div>
         {!! \Illuminate\Support\Str::markdown($resource->getAttribute('abstract')) !!}
     </div>
+    @if($resource->getAttribute('content_mime') === 'application/pdf')
+        <x-chunks.pdf-viewer :url="$resource->getAttribute('content_public_url')" />
+    @endif
     @if($resource->getAttribute('slides')->isNotEmpty())
         @foreach($resource->getAttribute('slides') as $num => $slide)
-            <div class="flex justify-center items-center">
-                <a href="#"
-                   class="font-semibold px-6 py-3 text-red-500 border border-red-500"
-                   wire:click.prevent="$dispatch('openModal', {component: 'resources.slide', arguments: {slide: {{ $slide->getKey() }} } } )">Open the Slides #{{ $num + 1 }}</a>
-            </div>
+{{--            <div class="flex justify-center items-center">--}}
+{{--                <a href="#"--}}
+{{--                   class="font-semibold px-6 py-3 text-red-500 border border-red-500"--}}
+{{--                   wire:click.prevent="$dispatch('openModal', {component: 'resources.slide', arguments: {slide: {{ $slide->getKey() }} } } )">Open the Slides #{{ $num + 1 }}</a>--}}
+{{--            </div>--}}
+            <livewire:resources.box-slide :$slide :$resource wire:key="{{ 'slide-'.$num }}" />
         @endforeach
     @endif
     @if($resource->getAttribute('downloadable'))

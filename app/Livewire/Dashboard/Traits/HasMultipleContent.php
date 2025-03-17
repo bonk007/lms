@@ -45,12 +45,8 @@ trait HasMultipleContent
         $path = 'resources' . DIRECTORY_SEPARATOR . auth()->id();
         $name = Str::random(8) . '.' . $this->file->extension();
 
-        if ($this->resource !== null && !$this->isDownloadable()) {
-            if ($this->streamable()) {
-                return (new VideoUploader($this->resource))->upload($modelClass, $this->file, auth()->user());
-            }
-
-            return null;
+        if ($this->resource !== null && !$this->isDownloadable() && $this->streamable()) {
+            return (new VideoUploader($this->resource))->upload($modelClass, $this->file, auth()->user());
         }
 
         return $this->file->storeAs($path, $name);
@@ -69,7 +65,7 @@ trait HasMultipleContent
 
     protected function streamable(): bool
     {
-        return !in_array($this->file->extension(), ['mp4', 'avi', 'mov', 'webm']);
+        return in_array($this->file->extension(), ['mp4', 'avi', 'mov', 'webm']);
     }
 
     protected function isDownloadable(): bool
