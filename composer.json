@@ -9,6 +9,7 @@
         "bonk007/system-settings": "^1.0",
         "dasundev/livewire-dropzone": "^2.0",
         "laravel/framework": "^11.9",
+        "laravel/octane": "^2.8",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.28",
         "pusher/pusher-php-server": "^7.2",
