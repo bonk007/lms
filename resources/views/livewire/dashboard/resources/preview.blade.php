@@ -35,7 +35,7 @@
     @endif
     @if($resource->getAttribute('content_mime') === 'text/html')
     <div>
-        {!! \Illuminate\Support\Str::markdown($resource->getAttribute('html_content')) !!}
+        {!! \Illuminate\Support\Str::markdown($resource->getAttribute('html_content') ?? '') !!}
     </div>
     @endif
 </div>
