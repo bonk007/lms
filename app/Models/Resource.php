@@ -44,7 +44,7 @@ class Resource extends Model
     public function contentPublicUrl(): Attribute
     {
         return new Attribute(get: function () {
-            return $this->getAttribute('content_url') === null ? null : Storage::url($this->getAttribute('content_url'));
+            return $this->getAttribute('content_url') === null ? null : Storage::disk('s3')->url($this->getAttribute('content_url'));
         });
     }
 
