@@ -17,20 +17,13 @@ class Participants extends Component
 
     public Course $course;
 
-    protected Query $query;
-
-    public function mount(): void
+    public function render(): View
     {
-        $this->query = new Query(
+        $participants = (new Query(
             Enrollment::query()->with([
                 'user'
             ])->whereBelongsTo($this->course, 'course')
-        );
-    }
-
-    public function render(): View
-    {
-        $participants = $this->query
+        ))
             ->filter([])
             ->orderBy('id', 'desc')
             ->build()
