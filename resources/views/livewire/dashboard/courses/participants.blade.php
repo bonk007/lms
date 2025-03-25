@@ -22,7 +22,7 @@
             <div class="font-semibold py-4 px-8">&nbsp;</div>
         </div>
         @forelse($participants as $key => $participant)
-            <div class="flex items-center hover:bg-blue-500 hover:text-slate-100 even:bg-slate-200">
+            <div class="flex items-center dark:even:bg-slate-500 hover:!bg-blue-500 hover:text-slate-100 even:bg-slate-200">
                 <div class="w-2 py-4 px-8">{{ $key + 1 }}</div>
                 <div class="py-4 px-8 flex-1">{{ $participant->user->name }}</div>
                 <div class="w-80 py-4 px-8">{{ $participant->user->email }}</div>
