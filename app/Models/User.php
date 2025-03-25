@@ -95,17 +95,28 @@ class User extends Authenticatable
         return new Attribute(get: fn() => $this->activity()->latest());
     }
 
-    public function isOnline(): Attribute
+    public function latestActivityTimestamp(): Attribute
     {
-        return (new Attribute(get: function () {
-            $latestActivity = $this->activity()->latest();
-
+        return new Attribute(get: function () {
+            /** @var ?array $latestActivity */
+            $latestActivity = $this->getAttribute('latest_activity');
             if (null === $latestActivity) {
                 return false;
             }
 
-            $activityTimestamp = Carbon::createFromFormat('Y-m-d H:i:s', $latestActivity['created_at']);
-            return $activityTimestamp?->gt(now()->subMinutes(15));
+            return Carbon::createFromFormat('Y-m-d H:i:s', $latestActivity['created_at']);
+        });
+    }
+
+    public function isOnline(): Attribute
+    {
+        return (new Attribute(get: function () {
+
+            $activityTimestamp = $this->getAttribute('latest_activity_timestamp');
+
+            return !$activityTimestamp
+                ? false
+                : $activityTimestamp?->gt(now()->subMinutes(15));
 
         }))->shouldCache();
     }

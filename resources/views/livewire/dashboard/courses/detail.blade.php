@@ -22,6 +22,9 @@
                     @if ($subPageIndex === 0)
                     <livewire:dashboard.courses.topics :course="$course" />
                     @endif
+                    @if ($subPageIndex === 1)
+                        <livewire:dashboard.courses.participants :course="$course" />
+                    @endif
                     @if ($subPageIndex === 2)
                     <livewire:dashboard.assignment.panel :course="$course" />
                     @endif
