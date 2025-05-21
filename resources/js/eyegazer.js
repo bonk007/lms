@@ -127,8 +127,8 @@ const gaze = async () => {
   await webgazer
     .setRegression('ridge')
     // .setTracker('TFFacemesh')
-    .showVideoPreview(false)
-    .showPredictionPoints(false)
+    .showVideoPreview(true)
+    .showPredictionPoints(true)
     .saveDataAcrossSessions(true)
     .begin(() => {
       if (!timeout) {
