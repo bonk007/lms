@@ -128,7 +128,7 @@ const gaze = async () => {
     .setRegression('ridge')
     // .setTracker('TFFacemesh')
     .showVideoPreview(true)
-    .showPredictionPoints(true)
+    .showPredictionPoints(false)
     .saveDataAcrossSessions(true)
     .begin(() => {
       if (!timeout) {
