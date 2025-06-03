@@ -17,6 +17,7 @@
         user: @js(auth()->user()),
         init() {
             if (this.user === null) {
+                window.hotjar()
                 return
             }
 
