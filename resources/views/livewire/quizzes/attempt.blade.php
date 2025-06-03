@@ -13,14 +13,14 @@
             <div class="flex flex-col gap-4 border px-6 py-4">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col">
-                        <span class="text-xl font-semibold">Section: {{ $currentStructure['title'] }}</span>
-                        @unless(empty($currentStructure['subtitle']))
-                            <span>{{ $currentStructure['subtitle'] }}</span>
+                        <span class="text-xl font-semibold">Section: {{ $currentStructure['title'] ?? '' }}</span>
+                        @unless(empty($currentStructure['subtitle'] ?? ''))
+                            <span>{{ $currentStructure['subtitle'] ?? '' }}</span>
                         @endunless
                     </div>
                     <div>
                         <span class="font-semibold italic">Description</span>
-                        {!! \Illuminate\Support\Str::markdown($currentStructure['description']) !!}
+                        {!! \Illuminate\Support\Str::markdown($currentStructure['description'] ?? '') !!}
                     </div>
                 </div>
                 <div class="flex-1 flex flex-col gap-4">
