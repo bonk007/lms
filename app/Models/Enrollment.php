@@ -26,7 +26,15 @@ class Enrollment extends Model
         'user_id',
         'status',
         'type',
+        'aui_enabled'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'aui_enabled' => 'bool'
+        ];
+    }
 
     /**
      * Get related course

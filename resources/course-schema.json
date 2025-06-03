@@ -1,0 +1,13 @@
+[
+  {
+    "name": "common"
+  },
+  {
+    "name": "stepper",
+    "topics": ["single", "accordion"]
+  },
+  {
+    "name": "tabs",
+    "topics": ["single", "accordion"]
+  }
+]

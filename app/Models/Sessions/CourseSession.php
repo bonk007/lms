@@ -16,7 +16,9 @@ class CourseSession extends Model
         'course_id',
         'user_id',
         'last_activity_at',
-        'completed_at'
+        'completed_at',
+        'aui_schema',
+        'cl_status'
     ];
 
     /** @inheritDoc */
