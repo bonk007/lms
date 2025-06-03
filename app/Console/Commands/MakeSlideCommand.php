@@ -44,10 +44,10 @@ class MakeSlideCommand extends Command
         $slide->user()->associate($user)->save();
         $items = [];
 
-        for($i = 1; $i <= 11; $i++) {
-            $number = str_pad($i, 4, 0, STR_PAD_LEFT);
-//            $number = $i;
-            $items[] = ["img" => "https://cdn.ibonk.id/ILOVEPDF/GNP2425-2_page-" .$number. ".jpg"];
+        for($i = 1; $i <= 24; $i++) {
+//            $number = str_pad($i, 4, 0, STR_PAD_LEFT);
+            $number = $i;
+            $items[] = ["img" => "https://cdn.ibonk.id/01.%20Slide-20250603T011937Z-1-001/Slide".$number.".JPG"];
         }
 
         $slide->items()->createMany($items);

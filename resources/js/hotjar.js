@@ -1,3 +1,11 @@
 import Hotjar from '@hotjar/browser'
 
-Hotjar.init(5135364, 6)
+export const hotjarTrack = (user) => {
+  Hotjar.init(5135364, 6)
+
+  if (user) {
+    Hotjar.identify(user.id, {name: user.name})
+  }
+
+}
+

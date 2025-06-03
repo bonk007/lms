@@ -2,6 +2,7 @@ import './bootstrap'
 import ckeditor from './ckeditor'
 import turnDown from './turndown'
 import PdfViewer from "./pdf-viewer.js";
+import {hotjarTrack} from "./hotjar.js";
 
 window.ckeditor = ckeditor
 window.turnDown = turnDown
@@ -18,3 +19,4 @@ window.subscribePrivateChannel = (user) => {
 }
 
 window.PdfViewer = PdfViewer
+window.hotjar = hotjarTrack

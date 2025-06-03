@@ -13,5 +13,21 @@
     @livewireScripts
     @livewire('wire-elements-modal')
     @stack('scripts')
+    <div x-data="{
+        user: @js(auth()->user()),
+        init() {
+            if (this.user === null) {
+                return
+            }
+
+            window.hotjar({
+                id: this.user.id,
+                name: this.user.name,
+            })
+
+        }
+    }">
+        &nbsp;
+    </div>
 </body>
 </html>
