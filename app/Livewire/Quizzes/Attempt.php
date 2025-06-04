@@ -87,6 +87,12 @@ class Attempt extends Component
     {
         $structure = $this->snapshot?->structure;
         ++$this->currentSection;
+
+        if (!isset($structure[$this->currentSection])) {
+            $this->completed();
+            return;
+        }
+
         $this->currentStructure = $structure[$this->currentSection] ?? [];
     }
 
@@ -105,7 +111,7 @@ class Attempt extends Component
                     ...[
                         'answer' => match($item['type']) {
                             'multiple-choices' => empty($item['answer']) ? null : array_keys($item['answer']),
-                            'single-choice' => empty($item['answer']) ? null : (int) $item['answer'],
+                            'single-choice' => is_array($item['answer']) ? null : (int) $item['answer'],
                             'boolean' => is_array($item['answer']) ? null : (bool) $item['answer'],
                             default => empty($item['answer']) ? null : $item['answer']
                         }

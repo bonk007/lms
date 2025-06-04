@@ -14,7 +14,7 @@ class QuizProgressUpdated
     /**
      * Create a new event instance.
      */
-    public function __construct(protected QuizAttempt $attempt)
+    public function __construct(public QuizAttempt $attempt)
     {
         //
     }

@@ -61,18 +61,32 @@ class QuizAttempt extends Model
         $progress = collect($this->getAttribute('latest_progress'));
         Question::query()
             ->whereIn('id', $progress->pluck('question_id'))
-            ->each(static function (Question $question) use ($progress) {
+            ->each(static function (Question $question) use ($progress, &$correctedProgress) {
 
                 if (in_array($question->type, ['short-answer', 'essay'])) {
                     return;
                 }
 
-                $progress->where('question_id', $question->id)
-                    ->transform(function (array $item) use ($question) {
-//                        dd($item, $question->toArray());
+                $progress->transform(function (array $item) use ($question, ) {
+                    $options = $question->getAttribute('options');
+                    $answer = $item['answer'];
 
-                    });
+                    if ($answer === null || !isset($options[$answer]) || $item['question_id'] !== $question->id) {
+                        return $item;
+                    }
+
+                    $item['correct'] = $options[$answer]['correct'];
+
+                    return $item;
+                });
+
             });
+
+        $correctAnswer = $progress->where('correct', true)->count();
+
+        $this->setAttribute('progress', $progress)
+            ->setAttribute('scores', ($correctAnswer / $progress->count()) * 100)
+            ->setAttribute('ended_at', $this->freshTimestamp());
     }
 
     /**
