@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sessions\CourseSession;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\RedirectResponse;
@@ -38,6 +39,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $this->randomizedAuiSchema($request->user());
         auth()->logout();
         return redirect()->route('home');
     }
@@ -51,5 +53,15 @@ class LoginController extends Controller
         }
 
         return null;
+    }
+
+    protected function randomizedAuiSchema(User $user): void
+    {
+        $schema = ($user->getKey() % 2 === 0) ? 'steps' : 'tabs';
+        CourseSession::query()->whereBelongsTo($user, 'user')
+            ->update([
+                'aui_schema' => $schema,
+                'cl_status' => $schema === 'steps' ? 'high' : 'medium'
+            ]);
     }
 }

@@ -15,12 +15,6 @@ class Tab extends Component
 
     public function switchTab(string $tab): void
     {
-        $parts = explode("+", $tab);
-
-        if (isset($parts[1])) {
-            $this->activeSubTab= $parts[1];
-        }
-
         $this->activeTab = $tab;
     }
 

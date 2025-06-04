@@ -70,6 +70,7 @@ class QuizAttempt extends Model
                 $progress->where('question_id', $question->id)
                     ->transform(function (array $item) use ($question) {
 //                        dd($item, $question->toArray());
+
                     });
             });
     }

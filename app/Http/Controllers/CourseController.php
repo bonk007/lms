@@ -29,6 +29,7 @@ class CourseController extends Controller
 
         $view = match ($schema) {
             'stepper' => 'components.pages.courses.aui.steps',
+            'tabs' => 'components.pages.courses.aui.tabs',
             default => 'components.pages.courses.show'
         };
 

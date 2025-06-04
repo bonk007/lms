@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Courses\Layouts;
 
-use App\Models\AUI\Stepper\SectionMapping;
+use App\Livewire\Courses\Concerns\WithSectionMapping;
 use App\Models\Course;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class Steps extends Component
 {
+    use WithSectionMapping;
+
     public Course $course;
 
     public int $currentStep = 0;
@@ -61,16 +62,5 @@ class Steps extends Component
     {
         $mapping = $this->getMap();
         return view('livewire.courses.layouts.steps', compact('mapping'));
-    }
-
-    protected function getMap(): Collection
-    {
-        return SectionMapping::query()
-            ->with(['section.content'])
-            ->whereBelongsTo($this->course, 'course')
-            ->get()
-            ->mapWithKeys(function (SectionMapping $mapping) {
-                return [$mapping->getAttribute('marked_as') => $mapping->section?->content];
-            });
     }
 }
