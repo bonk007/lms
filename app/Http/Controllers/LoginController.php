@@ -55,9 +55,13 @@ class LoginController extends Controller
         return null;
     }
 
+    /**
+     * @throws \Random\RandomException
+     */
     protected function randomizedAuiSchema(User $user): void
     {
-        $schema = ($user->getKey() % 2 === 0) ? 'stepper' : 'tabs';
+        $number = random_int(0, 1000);
+        $schema = ($number % 2 === 0) ? 'stepper' : 'tabs';
         CourseSession::query()->whereBelongsTo($user, 'user')
             ->update([
                 'aui_schema' => $schema,
