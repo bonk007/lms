@@ -76,7 +76,7 @@
 
         </div>
 
-        @if($currentStep === 0 && $mapping->get('watching') !== null)
+        @if($currentStep === 0 && $mapping->get('reading') !== null)
             <livewire:dashboard.resources.preview :resource="$mapping->get('reading')" />
         @endif
 
@@ -94,8 +94,8 @@
 
 
     </div>
-    <div class="fixed left-0 bottom-0 w-full flex items-center justify-end gap-4 border-t">
-        <a x-bind:href="prevHash" wire:click="prevStep">Prev</a>
-        <a x-bind:href="nextHash" wire:click="nextStep">Next</a>
+    <div class="fixed left-0 bottom-0 w-full flex items-center justify-end gap-4 border-t bg-slate-50 dark:bg-slate-600">
+        <a x-bind:href="prevHash" class="px-4 py-2 bg-slate-950 dark:bg-green-500 text-slate-50 hover:bg-red-500" wire:click="prevStep">Prev</a>
+        <a x-bind:href="nextHash" class="px-4 py-2 bg-slate-950 dark:bg-green-500 text-slate-50 hover:bg-red-500" wire:click="nextStep">Next</a>
     </div>
 </div>
