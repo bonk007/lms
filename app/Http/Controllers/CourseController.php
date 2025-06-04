@@ -25,7 +25,7 @@ class CourseController extends Controller
             ->whereBelongsTo(auth()->user(), 'user')
             ->whereBelongsTo($course, 'course')
             ->first();
-        $schema = $session ? substr($session->getAttribute('aui_schema'), 0, -2) : null;
+        $schema = $session->getAttribute('aui_schema');
 
         $view = match ($schema) {
             'stepper' => 'components.pages.courses.aui.steps',
