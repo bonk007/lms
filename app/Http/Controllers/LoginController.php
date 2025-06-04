@@ -57,11 +57,11 @@ class LoginController extends Controller
 
     protected function randomizedAuiSchema(User $user): void
     {
-        $schema = ($user->getKey() % 2 === 0) ? 'steps' : 'tabs';
+        $schema = ($user->getKey() % 2 === 0) ? 'stepper' : 'tabs';
         CourseSession::query()->whereBelongsTo($user, 'user')
             ->update([
                 'aui_schema' => $schema,
-                'cl_status' => $schema === 'steps' ? 'high' : 'medium'
+                'cl_status' => $schema === 'stepper' ? 'high' : 'medium'
             ]);
     }
 }
