@@ -26,7 +26,9 @@
                 <div class="flex-1 flex flex-col gap-4">
                     <span class="font-semibold text-xl">Questions</span>
                     @php
-                        $questions = $currentStructure['random_order_questions'] ? $currentStructure['randomized_questions'] : $currentStructure['questions'];
+                        $questions = isset($currentStructure['random_order_questions']) && $currentStructure['random_order_questions'] === true
+                            ? $currentStructure['randomized_questions']
+                            : $currentStructure['questions'];
                     @endphp
                     @foreach($questions as $qKey => $question)
 
