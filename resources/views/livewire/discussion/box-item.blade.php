@@ -1,7 +1,7 @@
 <div wire:click="select"
      class="flex gap-4 items-start p-4 border-b dark:border-slate-600 bg-slate-50 dark:bg-slate-700">
     <div>
-        <a href="#" class="w-12 h-12 border rounded-full bg-blue-400 flex justify-center items-center">AM</a>
+        <a href="#" class="w-12 h-12 border rounded-full bg-blue-400 flex justify-center items-center">{{ initial($discussion->creator->name) }}</a>
     </div>
     <div class="flex-grow flex flex-col gap-4">
         <div class="flex-grow">
