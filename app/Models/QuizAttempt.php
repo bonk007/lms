@@ -54,7 +54,7 @@ class QuizAttempt extends Model
         $snapshot = $this->getAttribute('snapshot');
         $quizData = $snapshot->getAttribute('quiz_data');
 
-        if (null === $this->progress || !$quizData['automated_scoring']) {
+        if (null === $this->progress) {
             return;
         }
 
