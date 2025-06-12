@@ -1,8 +1,22 @@
 <x-dashboard.layout>
-    <div class="h-full flex justify-center items-center">
-{{--        <livewire:dashboard.eye-tracker-downloader />--}}
-        <div class="border-2 rounded px-8 py-4 border-red-400">
-            Cognitive Load Dashboard is being under development
+    <div class="mt-4 mx-20 ">
+        <livewire:dashboard.a-u-i.summary />
+        <div class="mt-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div x-data="{
+                    init() {
+                        console.log(Highcharts)
+                    }
+                }">
+                    <livewire:dashboard.a-u-i.distribution-chart />
+                </div>
+                <div>
+                    <h1 class="text-lg font-semibold mb-2">Tabel Ringkasan Partisipan</h1>
+                    <livewire:dashboard.a-u-i.top-users-distribution />
+                </div>
+            </div>
         </div>
     </div>
+
+
 </x-dashboard.layout>
