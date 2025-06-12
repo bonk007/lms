@@ -53,8 +53,9 @@ class QuizAttempt extends Model
         $this->loadMissing(['snapshot']);
         $snapshot = $this->getAttribute('snapshot');
         $quizData = $snapshot->getAttribute('quiz_data');
+        $endedAt = $this->getAttribute('ended_at');
 
-        if (null === $this->progress) {
+        if (null === $this->progress || null !== $endedAt) {
             return;
         }
 
