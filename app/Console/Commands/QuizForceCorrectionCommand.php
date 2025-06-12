@@ -33,6 +33,7 @@ class QuizForceCorrectionCommand extends Command
                 ->whereNull('ended_at')
                 ->each(function (QuizAttempt $attempt) {
                     $attempt->doCorrection();
+                    $attempt->save();
                 });
         });
     }
