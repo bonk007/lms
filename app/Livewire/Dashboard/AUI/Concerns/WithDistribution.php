@@ -13,21 +13,25 @@ trait WithDistribution
         $sessions = DB::table('course_sessions')
             ->select([
                 'cl_status',
-                DB::raw('count(1) as total')
+                'user_id'
             ])
+            ->distinct()
             ->where('course_id', $course->getKey())
-            ->groupBy('cl_status')
-            ->get();
+            ->where('last_activity_at','>', now()->firstOfMonth())
+//            ->groupBy('cl_status')
+            ->get()->map(function (\stdClass $object) {
+                return [
+                    'cl_status' => $object->cl_status ?? 'low',
+                    'user_id' => $object->user_id
+                ];
+            })->groupBy('cl_status')
+            ->map(fn (Collection $item) => $item->count());
 
         return collect([
             'total' => $course->getAttribute('enrollments_count'),
             'low' => 0,
             'medium' => 0,
             'high' => 0,
-        ])->merge($sessions->mapWithKeys(function (\stdClass $object) {
-            $item = (array) $object;
-            $status = $item['cl_status'] ?? 'low';
-            return [$status => $item['total']];
-        }));
+        ])->merge($sessions);
     }
 }

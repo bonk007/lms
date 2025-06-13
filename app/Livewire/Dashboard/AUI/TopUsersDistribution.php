@@ -26,6 +26,7 @@ class TopUsersDistribution extends Component
             ->distinct('user_id', 'course_id')
             ->whereBelongsTo($course, 'course')
             ->take(5)
+            ->orderByDesc('user_id')
             ->get();
     }
 

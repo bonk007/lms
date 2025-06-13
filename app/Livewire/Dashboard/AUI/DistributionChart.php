@@ -32,7 +32,6 @@ class DistributionChart extends Component
         $high = $data->get('high') < 1 ? 0 : round($data->get('high') / $total, 2);
         $unknown = $anomaly < 1 ? 0 : round($anomaly / $total, 2);
 
-
         $this->data = collect([
             ['name' => 'Tinggi', 'y' => $high],
             ['name' => 'Medium', 'y' => $medium],
